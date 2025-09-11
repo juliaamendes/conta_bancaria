@@ -1,0 +1,7 @@
+package com.senai.conta_bancaria.domain.entity;
+
+public class Cliente {
+    String nome;
+    String cpf;
+
+}
