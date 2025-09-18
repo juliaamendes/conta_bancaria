@@ -26,4 +26,5 @@ public class ContaCorrenteDTO extends Conta {
 
     @Column(precision = 5)
     private BigDecimal taxa;
+    
 }

@@ -1,4 +1,4 @@
 package com.senai.conta_bancaria.application.dto;
 
-public class ClienteDTO {
+public class ClienteRegistroDTO {
 }
