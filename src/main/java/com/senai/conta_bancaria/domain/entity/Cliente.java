@@ -1,5 +1,6 @@
 package com.senai.conta_bancaria.domain.entity;
 
+import com.senai.conta_bancaria.domain.entity.Conta;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,20 +14,23 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Table(name = "cliente",
-uniqueConstraints =  { @UniqueConstraint(columnNames = "cpf")
-    }
+        uniqueConstraints = {
+                @UniqueConstraint( columnNames = "cpf")
+        }
 )
-
-public class Cliente {
+public  class Cliente {
     @Id
-    @GeneratedValue (strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+
     @Column(nullable = false, length = 120)
     private String nome;
     @Column(nullable = false, length = 11)
     private String cpf;
+
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Conta> contas;
+
     @Column(nullable = false)
-    private  Boolean ativo;
+    private Boolean ativo;
 }
