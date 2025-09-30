@@ -14,16 +14,12 @@ import java.math.BigDecimal;
 @DiscriminatorValue("CORRENTE")
 @Data
 @EqualsAndHashCode(callSuper = true)
-@SuperBuilder
 @NoArgsConstructor
+@SuperBuilder
 public class ContaCorrente extends Conta{
-
-
-    @Column(precision = 4)
+    @Column(precision=19, scale=2)
     private BigDecimal limite;
-
-
-    @Column(precision = 5)
+    @Column(precision=19, scale=4)
     private BigDecimal taxa;
 
     @Override
