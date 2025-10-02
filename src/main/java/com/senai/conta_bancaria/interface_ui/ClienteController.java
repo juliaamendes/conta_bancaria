@@ -1,5 +1,6 @@
 package com.senai.conta_bancaria.interface_ui;
 
+import com.senai.conta_bancaria.application.dto.ClienteAtualizadoDTO;
 import com.senai.conta_bancaria.application.dto.ClienteRegistroDTO;
 import com.senai.conta_bancaria.application.dto.ClienteResponseDTO;
 import com.senai.conta_bancaria.application.service.ClienteService;
@@ -18,31 +19,31 @@ public class ClienteController {
 
     private final ClienteService service;
 
-
     @PostMapping
     public ResponseEntity<ClienteResponseDTO> registrarCliente(@RequestBody ClienteRegistroDTO dto) {
-        ClienteResponseDTO novoCliente = service.registarClienteOuAnexarConta(dto);
-        return ResponseEntity.created(
-                URI.create("/api/cliente/cpf/"+novoCliente.cpf())
+        ClienteResponseDTO novoCliente = service.registrarCliente(dto);
+
+        return ResponseEntity.created(URI.create("/api/cliente/cpf/"+novoCliente.cpf())
         ).body(novoCliente);
     }
 
     @GetMapping
-    public ResponseEntity<List<ClienteResponseDTO>> listarClientesAtivos() {
+    public ResponseEntity<List<ClienteResponseDTO>> listarClientesAtivos(){
         return ResponseEntity.ok(service.listarClientesAtivos());
     }
 
     @GetMapping("/cpf/{cpf}")
-    public ResponseEntity<ClienteResponseDTO> buscarClienteAtivoPorCpf(@PathVariable String cpf) {
+    public ResponseEntity<ClienteResponseDTO> buscarClienteAtivoPorCpf(@PathVariable String cpf){
         return ResponseEntity.ok(service.buscarClienteAtivoPorCpf(cpf));
     }
 
-    @PutMapping("/cpf/{cpf}")
+    @PutMapping("/{cpf}")
     public ResponseEntity<ClienteResponseDTO> atualizarCliente(@PathVariable String cpf,
-                                                               @RequestBody ClienteRegistroDTO dto) {
+                                                               @RequestBody ClienteAtualizadoDTO dto) {
         return ResponseEntity.ok(service.atualizarCliente(cpf, dto));
     }
-    @DeleteMapping("/cpf/{cpf}")
+
+    @DeleteMapping("/{cpf}")
     public ResponseEntity<Void> deletarCliente(@PathVariable String cpf) {
         service.deletarCliente(cpf);
         return ResponseEntity.noContent().build();

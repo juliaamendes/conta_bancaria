@@ -14,16 +14,32 @@ import java.math.BigDecimal;
 @DiscriminatorValue("CORRENTE")
 @Data
 @EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
 @SuperBuilder
+@NoArgsConstructor
 public class ContaCorrente extends Conta{
-    @Column(precision=19, scale=2)
+
+    @Column(precision = 4)
     private BigDecimal limite;
-    @Column(precision=19, scale=4)
+
+    @Column(precision = 5)
     private BigDecimal taxa;
 
     @Override
     public String getTipo() {
         return "CORRENTE";
+    }
+
+    @Override
+    public void sacar(BigDecimal valor) {
+        if(valor.compareTo(BigDecimal.ZERO)<0)
+            throw new IllegalArgumentException("Valor inválido para saque");
+
+        BigDecimal custoSaque = valor.multiply(taxa);
+        BigDecimal totalSaque = valor.add(custoSaque);
+
+        if(getSaldo().add(limite).compareTo(totalSaque)<0)
+            throw new IllegalArgumentException("Saldo insuficiente para saque");
+
+        this.setSaldo(getSaldo().subtract(totalSaque));
     }
 }

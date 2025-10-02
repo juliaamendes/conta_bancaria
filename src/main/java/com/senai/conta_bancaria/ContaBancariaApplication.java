@@ -1,4 +1,4 @@
-package com.senai.conta_bancaria.interface_ui;
+package com.senai.conta_bancaria;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
