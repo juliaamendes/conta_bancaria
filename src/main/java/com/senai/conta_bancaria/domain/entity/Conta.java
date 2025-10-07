@@ -1,5 +1,7 @@
 package com.senai.conta_bancaria.domain.entity;
 
+import com.senai.conta_bancaria.domain.exception.TransferenciaParaMesmaContaException;
+import com.senai.conta_bancaria.domain.exception.ValoresNegativosException;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +10,7 @@ import lombok.experimental.SuperBuilder;
 import java.math.BigDecimal;
 
 @Entity
+@Data
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo_conta", discriminatorType = DiscriminatorType.STRING, length = 20)
 @Table(name = "conta",
@@ -16,11 +19,9 @@ import java.math.BigDecimal;
                 @UniqueConstraint(name = "uk_cliente_tipo", columnNames = {"cliente_id", "tipo_conta"})
         }
 )
-@Data
 @SuperBuilder
 @NoArgsConstructor
 public abstract class Conta {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
@@ -28,7 +29,7 @@ public abstract class Conta {
     @Column(nullable = false, length = 20)
     private String numero;
 
-    @Column(nullable = false, precision = 4)
+    @Column(nullable = false, precision = 20, scale = 2)
     private BigDecimal saldo;
 
     @Column(nullable = false)
@@ -38,24 +39,32 @@ public abstract class Conta {
     @JoinColumn(name = "cliente_id", foreignKey = @ForeignKey(name = "fk_conta_cliente"))
     private Cliente cliente;
 
-    public abstract String getTipo() ;
+    public abstract String getTipo();
 
     public void sacar(BigDecimal valor) {
-        validarValorMaiorQueZero(valor);
-        if (valor.compareTo(saldo) > 0) {
-            throw new IllegalArgumentException("Saldo insuficiente para saque.");
+        validarValorMaiorQueZero(valor,"saque");
+        if (this.saldo.compareTo(valor) < 0) {
+            throw new SaldoInsuficienteException();
         }
-        saldo = saldo.subtract(valor);
+        this.saldo = this.saldo.subtract(valor);
     }
-
     public void depositar(BigDecimal valor) {
-        validarValorMaiorQueZero(valor);
-        saldo = saldo.add(valor);
+        validarValorMaiorQueZero(valor,"depósito");
+        this.saldo = this.saldo.add(valor);
+    }
+    protected static void validarValorMaiorQueZero(BigDecimal valor, String operacao) {
+        if (valor.compareTo(BigDecimal.ZERO) < 0) {
+            throw new ValoresNegativosException(operacao);
+        }
     }
 
-    private static void validarValorMaiorQueZero(BigDecimal valor) {
-        if(valor.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("O valor de saque deve ser positivo.");
+
+    public void transferir(BigDecimal valor, Conta contaDestino) {
+        if (this.id.equals(contaDestino.getId())) {
+            throw new TransferenciaParaMesmaContaException();
         }
+
+        this.sacar(valor);
+        contaDestino.depositar(valor);
     }
 }
