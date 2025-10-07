@@ -43,6 +43,7 @@ public class ContaService {
             corrente.setLimite(dto.limite());
             corrente.setTaxa(dto.taxa());
         } else {
+
             throw new TipoDeContaInvalidaException();
         }
         conta.setSaldo(dto.saldo());
