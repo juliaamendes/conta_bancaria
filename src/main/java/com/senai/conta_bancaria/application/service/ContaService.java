@@ -7,7 +7,9 @@ import com.senai.conta_bancaria.application.dto.ValorSaqueDepositoDTO;
 import com.senai.conta_bancaria.domain.entity.Conta;
 import com.senai.conta_bancaria.domain.entity.ContaCorrente;
 import com.senai.conta_bancaria.domain.entity.ContaPoupanca;
+import com.senai.conta_bancaria.domain.exception.EntidadeNaoEncontradaException;
 import com.senai.conta_bancaria.domain.exception.RendimentoInvalidoException;
+import com.senai.conta_bancaria.domain.exception.TipoDeContaInvalidaException;
 import com.senai.conta_bancaria.domain.repository.ContaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -44,7 +46,7 @@ public class ContaService {
             corrente.setTaxa(dto.taxa());
         } else {
 
-            throw new TipoDeContaInvalidaException();
+            throw new TipoDeContaInvalidaException("");
         }
         conta.setSaldo(dto.saldo());
 

@@ -1,5 +1,6 @@
 package com.senai.conta_bancaria.domain.entity;
 
+import com.senai.conta_bancaria.domain.exception.SaldoInsuficienteException;
 import com.senai.conta_bancaria.domain.exception.TransferenciaParaMesmaContaException;
 import com.senai.conta_bancaria.domain.exception.ValoresNegativosException;
 import jakarta.persistence.*;
@@ -44,7 +45,7 @@ public abstract class Conta {
     public void sacar(BigDecimal valor) {
         validarValorMaiorQueZero(valor,"saque");
         if (this.saldo.compareTo(valor) < 0) {
-            throw new SaldoInsuficienteException();
+            throw new SaldoInsuficienteException("saque");
         }
         this.saldo = this.saldo.subtract(valor);
     }

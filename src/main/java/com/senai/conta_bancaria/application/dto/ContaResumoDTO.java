@@ -32,7 +32,7 @@ public record ContaResumoDTO(
                     .cliente(cliente)
                     .build();
         }
-        throw  new TipoDeContaInvalidaException();
+        throw  new TipoDeContaInvalidaException(tipo);
     }
     public static ContaResumoDTO fromEntity(Conta c) {
         return new ContaResumoDTO(
