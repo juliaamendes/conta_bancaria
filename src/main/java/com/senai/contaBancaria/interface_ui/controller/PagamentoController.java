@@ -1,8 +1,8 @@
 package com.senai.contaBancaria.interface_ui.controller;
 
-import com.senai.novo_conta_bancaria.application.dto.ContaResumoDto;
-import com.senai.novo_conta_bancaria.application.dto.PagamentoRegistroDto;
-import com.senai.novo_conta_bancaria.application.service.PagamentoAppService;
+import com.senai.contaBancaria.aplication.dto.ContaResumoDTO;
+import com.senai.contaBancaria.aplication.dto.PagamentoRegistroDto;
+import com.senai.contaBancaria.aplication.service.PagamentoAppService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -55,7 +55,7 @@ public class PagamentoController {
             }
     )
     @PostMapping("/{numeroConta}")
-    public ResponseEntity<ContaResumoDto> pagar(@PathVariable Long numero, @Valid @RequestBody PagamentoRegistroDto dto) {
+    public ResponseEntity<ContaResumoDTO> pagar(@PathVariable Long numero, @Valid @RequestBody PagamentoRegistroDto dto) {
         return ResponseEntity
                 .ok(pagamentoAppService.pagar(numero, dto));
     }

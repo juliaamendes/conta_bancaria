@@ -37,7 +37,7 @@ public record PagamentoRegistroDto(
                 return Pagamento.builder()
                         .conta() // TODO
                         .servico(servico)
-                        .
+
         }
 
         private Cliente conta;

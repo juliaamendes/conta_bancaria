@@ -1,72 +1,74 @@
 package com.senai.contaBancaria.domain.entity;
 
+import com.senai.contaBancaria.domain.entity.Cliente;
 import com.senai.contaBancaria.domain.exceptions.SaldoInsuficienteException;
 import com.senai.contaBancaria.domain.exceptions.TransferenciaParaMesmaContaException;
 import com.senai.contaBancaria.domain.exceptions.ValoresNegativosExecption;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
-
+import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo_conta", discriminatorType = DiscriminatorType.STRING, length = 20)
-@Table (name = "conta",
-    uniqueConstraints = {
-        @UniqueConstraint(name = "uk_conta_numero", columnNames = "numero"),
-        @UniqueConstraint(name = "uk_cliente_tipo", columnNames = {"cliente_id", "tipo_conta"})
-    }
-)
+@Data
 @SuperBuilder
 @NoArgsConstructor
-public abstract class Conta{
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_conta", discriminatorType = DiscriminatorType.STRING, length = 8)
+@Table(
+        name = "contas",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_conta_numero", columnNames = "numero"),
+                @UniqueConstraint(name = "uk_cliente_tipo", columnNames = {"cliente_id", "tipo_conta"})
+        }
+)
+public abstract class Conta {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;// classe repper é o que representa, que são classes que podem ser nulas ou não
-    @Column (nullable = false, length = 20)
-    private String numero;
-    @Column (nullable = false, precision = 20, scale = 2)
+    private String id;
+
+    @Column(nullable = false, length = 20)
+    private Long numero;
+
+    @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal saldo;
-    @Column (nullable = false)
-    private boolean ativa;
+
+    @Column(nullable = false)
+    private boolean ativo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn (name = "cliente_id", foreignKey = @ForeignKey(name="fk_conta_cliente"))
+    @JoinColumn(name = "cliente_id", nullable = false, foreignKey = @ForeignKey(name = "fk_conta_cliente"))
     private Cliente cliente;
 
-    public abstract String  getTipo();
+    public abstract String getTipo();
 
     public void sacar(BigDecimal valor) {
-        validarValorMaiorQueZero(valor, "Saque");
-        if (this.saldo.compareTo(valor) < 0) {
-            throw new SaldoInsuficienteException();
-        }
-        this.saldo = this.saldo.subtract(valor);
+        if (valor.compareTo(getSaldo()) > 0)
+            throw new SaldoInsuficienteException("saque");
+        validarValorMaiorQueZero(valor, "saque");
+
+        saldo = saldo.subtract(valor);
     }
+
     public void depositar(BigDecimal valor) {
-        validarValorMaiorQueZero(valor, "Depósito");
-        this.saldo = this.saldo.add(valor);
+        validarValorMaiorQueZero(valor, "depósito");
+
+        saldo = saldo.add(valor);
     }
 
-    protected static void validarValorMaiorQueZero(BigDecimal valor, String operacao) {
-        if (valor.compareTo(BigDecimal.ZERO) < 0){
-            throw new ValoresNegativosExecption(operacao);
-        }
-    }
-
-    public void tranferir(BigDecimal valor, Conta contaDestino){
-        if (this.equals(contaDestino.getId())){
+    public void transferir(Conta contaDestino, BigDecimal valor) {
+        if (id.equals(contaDestino.getId()))
             throw new TransferenciaParaMesmaContaException();
-        }
-        this.sacar(valor);
-        contaDestino.depositar(valor);
 
+        sacar(valor);
+        contaDestino.depositar(valor);
+    }
+
+    protected void validarValorMaiorQueZero(BigDecimal valor, String operacao) {
+        if (valor.compareTo(BigDecimal.ZERO) <= 0)
+            throw new ValoresNegativosExecption(operacao);
     }
 }

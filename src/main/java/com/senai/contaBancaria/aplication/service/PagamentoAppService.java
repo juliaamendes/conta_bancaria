@@ -1,12 +1,12 @@
 package com.senai.contaBancaria.aplication.service;
 
-import com.senai.novo_conta_bancaria.application.dto.ContaResumoDto;
-import com.senai.novo_conta_bancaria.application.dto.PagamentoRegistroDto;
-import com.senai.novo_conta_bancaria.application.dto.PagamentoResponseDto;
-import com.senai.novo_conta_bancaria.domain.entity.Conta;
-import com.senai.novo_conta_bancaria.domain.entity.Pagamento;
-import com.senai.novo_conta_bancaria.domain.repository.ContaRepository;
-import com.senai.novo_conta_bancaria.domain.repository.PagamentoRepository;
+import com.senai.contaBancaria.aplication.dto.ContaResumoDTO;
+import com.senai.contaBancaria.aplication.dto.PagamentoRegistroDto;
+import com.senai.contaBancaria.aplication.dto.PagamentoResponseDto;
+import com.senai.contaBancaria.domain.entity.Conta;
+import com.senai.contaBancaria.domain.entity.Pagamento;
+import com.senai.contaBancaria.domain.repository.ContaRepository;
+import com.senai.contaBancaria.domain.repository.PagamentoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class PagamentoAppService {
     private final PagamentoDomainService pagamentoDomainService;
 
     @PreAuthorize("hasRole('CLIENTE')")
-    public ContaResumoDto pagar(Long numero, PagamentoRegistroDto dto) {
+    public ContaResumoDTO pagar(Long numero, PagamentoRegistroDto dto) {
         Conta conta = contaService.procurarContaAtiva(numero);
 
         BigDecimal valorDasTaxas = pagamentoDomainService.calcularTaxas(dto.formaPagamento(), dto.valorServico());

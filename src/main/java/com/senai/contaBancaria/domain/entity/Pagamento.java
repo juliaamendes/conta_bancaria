@@ -14,8 +14,7 @@ import java.util.HashSet;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(
-        name = "pagamentos",
+@Table(name = "pagamentos",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "id")
         }

@@ -39,7 +39,7 @@ public class ContaCorrente extends Conta {
         if (getSaldo().add(limite).compareTo(totalSaque) < 0){
             throw new SaldoInsuficienteException();
     }
-        this.setSaldo(this.getSaldo().subtract(totalSaque));
+        setSaldo.setSaldo(this.getSaldo().subtract(totalSaque));
     }
 
 
