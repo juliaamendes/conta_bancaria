@@ -1,8 +1,8 @@
 package com.senai.contaBancaria.aplication.service;
 
-import com.senai.novo_conta_bancaria.domain.entity.Taxa;
-import com.senai.novo_conta_bancaria.domain.enums.FormaPagamento;
-import com.senai.novo_conta_bancaria.domain.repository.TaxaRepository;
+import com.senai.contaBancaria.domain.entity.Taxa;
+import com.senai.contaBancaria.domain.enums.FormaPagamento;
+import com.senai.contaBancaria.domain.repository.TaxaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
