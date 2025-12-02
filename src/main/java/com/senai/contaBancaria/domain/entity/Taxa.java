@@ -1,6 +1,6 @@
 package com.senai.contaBancaria.domain.entity;
 
-import com.senai.novo_conta_bancaria.domain.enums.FormaPagamento;
+import com.senai.contaBancaria.domain.enums.FormaPagamento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

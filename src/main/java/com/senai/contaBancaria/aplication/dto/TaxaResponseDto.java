@@ -1,6 +1,6 @@
 package com.senai.contaBancaria.aplication.dto;
 
-import com.senai.novo_conta_bancaria.domain.entity.Taxa;
+import com.senai.contaBancaria.domain.entity.Taxa;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;

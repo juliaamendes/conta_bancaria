@@ -1,6 +1,6 @@
 package com.senai.contaBancaria.aplication.dto;
 
-import com.senai.novo_conta_bancaria.domain.entity.Pagamento;
+import com.senai.contaBancaria.domain.entity.Pagamento;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

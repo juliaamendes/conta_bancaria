@@ -1,7 +1,7 @@
 package com.senai.contaBancaria.domain.entity;
 
-import com.senai.novo_conta_bancaria.domain.enums.StatusPagamento;
-import com.senai.novo_conta_bancaria.domain.enums.FormaPagamento;
+import com.senai.contaBancaria.domain.enums.StatusPagamento;
+import com.senai.contaBancaria.domain.enums.FormaPagamento;
 import jakarta.persistence.*;
 import lombok.*;
 

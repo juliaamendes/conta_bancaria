@@ -1,10 +1,10 @@
 package com.senai.contaBancaria.aplication.dto;
 
-import com.senai.novo_conta_bancaria.domain.entity.Cliente;
-import com.senai.novo_conta_bancaria.domain.entity.Pagamento;
-import com.senai.novo_conta_bancaria.domain.entity.Taxa;
-import com.senai.novo_conta_bancaria.domain.enums.FormaPagamento;
-import com.senai.novo_conta_bancaria.domain.enums.StatusPagamento;
+import com.senai.contaBancaria.domain.entity.Cliente;
+import com.senai.contaBancaria.domain.entity.Pagamento;
+import com.senai.contaBancaria.domain.entity.Taxa;
+import com.senai.contaBancaria.domain.enums.FormaPagamento;
+import com.senai.contaBancaria.domain.enums.StatusPagamento;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 

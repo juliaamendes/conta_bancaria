@@ -1,7 +1,7 @@
 package com.senai.contaBancaria.aplication.dto;
 
-import com.senai.novo_conta_bancaria.domain.entity.Gerente;
-import com.senai.novo_conta_bancaria.domain.enums.Role;
+import com.senai.contaBancaria.domain.entity.Gerente;
+import com.senai.contaBancaria.domain.enums.Role;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 
