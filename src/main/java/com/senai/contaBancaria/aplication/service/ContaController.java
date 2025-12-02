@@ -1,6 +1,5 @@
-package com.senai.novo_conta_bancaria.interface_ui.controller;
+package com.senai.contaBancaria.aplication.service;
 
-import com.senai.contaBancaria.aplication.dto.ContaAtualizacaoDTO;
 import com.senai.contaBancaria.aplication.dto.*;
 import com.senai.contaBancaria.aplication.service.ContaService;
 import com.senai.contaBancaria.aplication.service.PagamentoAppService;
@@ -146,8 +145,8 @@ public class ContaController {
             }
     )
     @PutMapping("/{numero}")
-    public ResponseEntity<ContaResumoDTO> atualizarConta(@PathVariable Long numero,
-                                                         @Valid @RequestBody ContaAtualizacaoDTO dto) {
+    public ResponseEntity<ContaResumoDto> atualizarConta(@PathVariable Long numero,
+                                                         @Valid @RequestBody ContaAtualizacaoDto dto) {
         return ResponseEntity
                 .ok(service.atualizarConta(numero, dto));
     }
