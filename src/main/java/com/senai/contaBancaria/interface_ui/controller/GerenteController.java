@@ -1,8 +1,8 @@
 package com.senai.contaBancaria.interface_ui.controller;
 
-import com.senai.novo_conta_bancaria.application.dto.*;
-import com.senai.novo_conta_bancaria.application.dto.GerenteRegistroDto;
-import com.senai.novo_conta_bancaria.application.service.GerenteService;
+import com.senai.contaBancaria.aplication.dto.*;
+import com.senai.contaBancaria.aplication.dto.GerenteRegistroDto;
+import com.senai.contaBancaria.aplication.service.GerenteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

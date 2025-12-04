@@ -25,4 +25,5 @@ public class Cliente extends Usuario {
     @Column (nullable = false)
     private boolean ativo;
 
+
 }

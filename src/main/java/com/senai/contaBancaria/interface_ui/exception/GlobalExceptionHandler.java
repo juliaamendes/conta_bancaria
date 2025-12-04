@@ -81,8 +81,8 @@ public class GlobalExceptionHandler {
         return problem;
     }
 
-    @ExceptionHandler(ContaDeMesmoTipoException.class)
-    public ProblemDetail handleContaDeMesmoTipo(ContaDeMesmoTipoException ex, HttpServletRequest request) {
+    @ExceptionHandler(ContaMesmoTipoException.class)
+    public ProblemDetail handleContaDeMesmoTipo(ContaMesmoTipoException ex, HttpServletRequest request) {
         return ProblemDetailUtils.buildProblem(
                 HttpStatus.BAD_REQUEST,
                 "Conta desse tipo já existe para este cliente.",
@@ -143,8 +143,8 @@ public class GlobalExceptionHandler {
         );
     }
 
-    @ExceptionHandler(ValoresNegativosException.class)
-    public ProblemDetail handleValoresNegativos(ValoresNegativosException ex, HttpServletRequest request) {
+    @ExceptionHandler(ValoresNegativosExecption.class)
+    public ProblemDetail handleValoresNegativos(ValoresNegativosExecption ex, HttpServletRequest request) {
         return ProblemDetailUtils.buildProblem(
                 HttpStatus.BAD_REQUEST,
                 "Valores negativos não são permitidos.",

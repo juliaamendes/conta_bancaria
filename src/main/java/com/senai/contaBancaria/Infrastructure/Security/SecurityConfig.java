@@ -22,14 +22,29 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(
-                        AbstractHttpConfigurer::disable)
+        http
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**","/swagger-ui/**","/v3/api-docs/**").permitAll()
+                        // Permitir acesso público a endpoints de autenticação e documentação
+                        .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
 
-                        .requestMatchers(HttpMethod.POST, "/professores").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/professores").hasAnyRole("ADMIN","PROFESSOR")
+                        // ADMIN
+                        .requestMatchers(HttpMethod.GET, "/gerentes/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/gerentes/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/gerentes/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/gerentes/**").hasRole("ADMIN")
 
+                        .requestMatchers(HttpMethod.GET, "/clientes/**").hasAnyRole("ADMIN", "GERENTE")
+                        .requestMatchers(HttpMethod.POST, "/clientes/**").hasAnyRole("ADMIN", "GERENTE")
+                        .requestMatchers(HttpMethod.PUT, "/clientes/**").hasAnyRole("ADMIN", "GERENTE")
+                        .requestMatchers(HttpMethod.DELETE, "/clientes/**").hasAnyRole("ADMIN", "GERENTE")
+
+                        .requestMatchers(HttpMethod.GET, "/contas/**").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.POST, "/contas/**").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.PUT, "/contas/**").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.DELETE, "/contas/**").hasRole("CLIENTE")
+
+                        // Qualquer outra requisição precisa estar autenticada
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
@@ -37,7 +52,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {

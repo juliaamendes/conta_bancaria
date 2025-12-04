@@ -1,9 +1,9 @@
 package com.senai.contaBancaria.interface_ui.controller;
 
-import com.senai.novo_conta_bancaria.application.dto.TaxaAtualizacaoDto;
-import com.senai.novo_conta_bancaria.application.dto.TaxaRegistroDto;
-import com.senai.novo_conta_bancaria.application.dto.TaxaResponseDto;
-import com.senai.novo_conta_bancaria.application.service.TaxaService;
+import com.senai.contaBancaria.aplication.dto.TaxaAtualizacaoDto;
+import com.senai.contaBancaria.aplication.dto.TaxaRegistroDto;
+import com.senai.contaBancaria.aplication.dto.TaxaResponseDto;
+import com.senai.contaBancaria.aplication.service.TaxaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

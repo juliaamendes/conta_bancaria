@@ -5,6 +5,7 @@ import com.senai.contaBancaria.aplication.dto.TaxaRegistroDto;
 import com.senai.contaBancaria.aplication.dto.TaxaResponseDto;
 import com.senai.contaBancaria.domain.entity.Taxa;
 import com.senai.contaBancaria.domain.entity.Conta;
+import com.senai.contaBancaria.domain.enums.FormaPagamento;
 import com.senai.contaBancaria.domain.exceptions.ContaMesmoTipoException;
 import com.senai.contaBancaria.domain.exceptions.EntidadeNaoEncontradaException;
 import com.senai.contaBancaria.domain.repository.TaxaRepository;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -47,16 +49,18 @@ public class TaxaService {
 
     @Transactional(readOnly = true)
     public TaxaResponseDto buscarTaxa(String id) {
-        return TaxaResponseDto.fromEntity(procurarTaxaAtivo(id));
+        return TaxaResponseDto.fromEntity(procurarTaxaAtiva(id));
     }
 
     // UPDATE
     @PreAuthorize("hasAnyRole('ADMIN','GERENTE')")
     public TaxaResponseDto atualizarTaxa(String id, TaxaAtualizacaoDto dto) {
-        Taxa taxa = procurarTaxaAtivo(id);
+        Taxa taxa = procurarTaxaAtiva(id);
 
+        taxa.setDescricao(dto.descricao());
         taxa.setPercentual(dto.percentual());
         taxa.setValorFixo(dto.valorFixo());
+        taxa.setDescricao(dto.formaPagamento());
 
         return TaxaResponseDto.fromEntity(repository.save(taxa));
     }
@@ -64,17 +68,22 @@ public class TaxaService {
     // DELETE
     @PreAuthorize("hasAnyRole('ADMIN','GERENTE')")
     public void apagarTaxa(String id) {
-        Taxa taxa = procurarTaxaAtivo(id);
+        Taxa taxa = procurarTaxaAtiva(id);
 
         taxa.setAtivo(false);
 
         repository.save(taxa);
     }
 
-    // Mét0do auxiliar para as requisições
-    private Taxa procurarTaxaAtivo(String id) {
+    // Mét0dos auxiliares para as requisições
+    protected Taxa procurarTaxaAtiva(String id) {
         return repository
                 .findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("taxa"));
+    }
+
+    protected Set<Taxa> procurarTaxasPorFormaPagamento(FormaPagamento formaPagamento) {
+        return (Set<Taxa>) repository
+                .findAllByFormaPagamentoAndAtivoTrue(formaPagamento);
     }
 }

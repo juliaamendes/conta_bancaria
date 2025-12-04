@@ -1,8 +1,8 @@
 package com.senai.contaBancaria.interface_ui.controller;
 
-import com.senai.novo_conta_bancaria.application.dto.AuthDto;
-import com.senai.novo_conta_bancaria.application.dto.ClienteRegistroDto;
-import com.senai.novo_conta_bancaria.application.service.AuthService;
+import com.senai.contaBancaria.aplication.dto.AuthDTO;
+import com.senai.contaBancaria.aplication.dto.ClienteRegistroDTO;
+import com.senai.contaBancaria.aplication.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -29,7 +29,7 @@ public class AuthController {
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     required = true,
                     content = @Content(
-                            schema = @Schema(implementation = AuthDto.LoginRequest.class),
+                            schema = @Schema(implementation = AuthDTO.LoginRequest.class),
                             examples = @ExampleObject(name = "Exemplo válido", value = """
                                         {
                                           "email": "admin@senai.com",
@@ -59,8 +59,8 @@ public class AuthController {
             }
     )
     @PostMapping("/login")
-    public ResponseEntity<AuthDto.TokenResponse> login(@RequestBody AuthDto.LoginRequest req) {
+    public ResponseEntity<AuthDTO.TokenResponse> login(@RequestBody AuthDTO.LoginRequest req) {
         String token = auth.login(req);
-        return ResponseEntity.ok(new AuthDto.TokenResponse(token));
+        return ResponseEntity.ok(new AuthDTO.TokenResponse(token));
     }
 }

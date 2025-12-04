@@ -37,9 +37,9 @@ public class ContaCorrente extends Conta {
         BigDecimal totalSaque = valor.add(custoSaque);
 
         if (getSaldo().add(limite).compareTo(totalSaque) < 0){
-            throw new SaldoInsuficienteException();
+            throw new SaldoInsuficienteException("saque");
     }
-        setSaldo.setSaldo(this.getSaldo().subtract(totalSaque));
+        setSaldo(getSaldo().subtract(totalSaque));
     }
 
 

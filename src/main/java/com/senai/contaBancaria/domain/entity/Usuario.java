@@ -4,43 +4,40 @@ import com.senai.contaBancaria.domain.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-@Getter
-@Setter
+@Data
 @Entity
 @SuperBuilder
 @NoArgsConstructor
-@Inheritance(strategy = InheritanceType.JOINED) // estratégia JOINED
+@AllArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(
+        name = "usuarios",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "cpf")
+        }
+)
 public abstract class Usuario {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    protected String id;
+    private String id;
 
-    @NotBlank
+    @Column(nullable = false, length = 120)
+    private String nome;
+
+    @Column(nullable = false, length = 11)
+    private Long cpf;
+
+    @Column(nullable = false, length = 120)
+    private String email;
+
+    @Column(nullable = false, length = 120)
+    private String senha;
+
     @Column(nullable = false)
-    protected String nome;
-
-    @NotBlank
-    @Column(nullable = false, unique = true, length = 14)
-    protected String cpf; // formato "000.000.000-00" (validação pode ser ampliada)
-
-    @Email
-    @NotBlank
-    @Column(nullable = false, unique = true)
-    protected String email;
-
-    @Column(nullable = false)
-    protected boolean ativo = true;
-
-    @NotBlank
-    @Column(nullable = false)
-    protected String senha;
+    private boolean ativo;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

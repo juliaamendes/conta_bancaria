@@ -1,12 +1,8 @@
 package com.senai.contaBancaria.aplication.dto;
 
-import com.senai.contaBancaria.domain.entity.Gerente;
-import com.senai.contaBancaria.domain.enums.Role;
 import jakarta.validation.constraints.*;
-import lombok.Builder;
 
-@Builder
-public record GerenteRegistroDto(
+public record ClienteAtualizacaoDto(
         @NotNull(message = "O nome não pode ser nulo.")
         @NotBlank(message = "O nome não pode ser vazio.")
         @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres.")
@@ -25,18 +21,6 @@ public record GerenteRegistroDto(
         @NotNull(message = "A senha não pode ser nula.")
         @NotBlank(message = "A senha não pode ser vazia.")
         @Size(min = 8, max = 100, message = "A senha deve ter entre 8 e 100 caracteres.")
-        String senha,
-
-        ContaResumoDTO conta
+        String senha
 ) {
-    public Gerente toEntity() {
-        return Gerente.builder()
-                .ativo(true)
-                .nome(nome)
-                .cpf(cpf)
-                .email(email)
-                .senha(senha)
-                .role(Role.GERENTE)
-                .build();
-    }
 }

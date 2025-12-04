@@ -9,13 +9,15 @@ import java.util.List;
 public record PagamentoResponseDto(
         String id,
         String servico,
-        BigDecimal valorPago,
+        BigDecimal valorServico,
+        BigDecimal valorTaxa,
+        BigDecimal valorTotal,
         LocalDateTime dataPagamento,
         String status,
         List<TaxaResponseDto> taxas,
         String formaPagamento
 ) {
-        public static PagamentoResponseDto fromEntity(Pagamento pagamento) {
+        public static PagamentoResponseDto fromEntity(Pagamento pagamento, BigDecimal valorTaxa) {
                 List<TaxaResponseDto> taxas = pagamento
                         .getTaxas()
                         .stream()
@@ -25,6 +27,8 @@ public record PagamentoResponseDto(
                         pagamento.getId(),
                         pagamento.getServico(),
                         pagamento.getValorPago(),
+                        valorTaxa,
+                        pagamento.getValorPago().add(valorTaxa),
                         pagamento.getDataPagamento(),
                         pagamento.getStatus().name(),
                         taxas,

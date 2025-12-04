@@ -1,6 +1,5 @@
 package com.senai.contaBancaria.domain.entity;
 
-import com.senai.contaBancaria.domain.entity.Cliente;
 import com.senai.contaBancaria.domain.exceptions.SaldoInsuficienteException;
 import com.senai.contaBancaria.domain.exceptions.TransferenciaParaMesmaContaException;
 import com.senai.contaBancaria.domain.exceptions.ValoresNegativosExecption;

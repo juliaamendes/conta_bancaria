@@ -1,4 +1,4 @@
-package com.senai.novo_conta_bancaria.interface_ui.controller;
+package com.senai.contaBancaria.interface_ui.controller;
 
 import com.senai.contaBancaria.aplication.dto.ContaAtualizacaoDTO;
 import com.senai.contaBancaria.aplication.dto.*;
@@ -46,7 +46,7 @@ public class ContaController {
             }
     )
     @GetMapping
-    public ResponseEntity<List<ContaResumoDto>> listarTodasAsContas() {
+    public ResponseEntity<List<ContaResumoDTO>> listarTodasAsContas() {
         return ResponseEntity
                 .ok(service.listarTodasAsContas()); // status code: 200 (encontrado com êxito)
     }
@@ -68,7 +68,7 @@ public class ContaController {
             }
     )
     @GetMapping("/cpf/{cpf}")
-    public ResponseEntity<List<ContaResumoDto>> listarContasPorCpf(@PathVariable Long cpf) {
+    public ResponseEntity<List<ContaResumoDTO>> listarContasPorCpf(@PathVariable Long cpf) {
         return ResponseEntity
                 .ok(service.listarContasPorCpf(cpf)); // status code: 200 (encontrado com êxito)
     }
@@ -92,7 +92,7 @@ public class ContaController {
             }
     )
     @GetMapping("/numero/{numero}")
-    public ResponseEntity<ContaResumoDto> buscarConta(@PathVariable Long numero) {
+    public ResponseEntity<ContaResumoDTO> buscarConta(@PathVariable Long numero) {
         return ResponseEntity
                 .ok(service.buscarConta(numero));
     }
@@ -182,28 +182,28 @@ public class ContaController {
     // Ações específicas
 
     @PostMapping("/{numero}/sacar")
-    public ResponseEntity<ContaResumoDto> sacar(@PathVariable Long numero,
-                                                @Valid @RequestBody ValorSaqueDepositoDto dto) {
+    public ResponseEntity<ContaResumoDTO> sacar(@PathVariable Long numero,
+                                                @Valid @RequestBody ValorSaqueDepositoDTO dto) {
         return ResponseEntity
                 .ok(service.sacar(numero, dto));
     }
 
     @PostMapping("/{numero}/depositar")
-    public ResponseEntity<ContaResumoDto> depositar(@PathVariable Long numero,
-                                                    @Valid @RequestBody ValorSaqueDepositoDto dto) {
+    public ResponseEntity<ContaResumoDTO> depositar(@PathVariable Long numero,
+                                                    @Valid @RequestBody ValorSaqueDepositoDTO dto) {
         return ResponseEntity
                 .ok(service.depositar(numero, dto));
     }
 
     @PostMapping("/{numero}/transferir")
-    public ResponseEntity<ContaResumoDto> transferir(@PathVariable Long numero,
-                                                     @Valid @RequestBody TransferenciaDto dto) {
+    public ResponseEntity<ContaResumoDTO> transferir(@PathVariable Long numero,
+                                                     @Valid @RequestBody TransferenciaDTO dto) {
         return ResponseEntity
                 .ok(service.transferir(numero, dto));
     }
 
     @PostMapping("/{numero}/rendimento")
-    public ResponseEntity<ContaResumoDto> rendimento(@PathVariable Long numero) {
+    public ResponseEntity<ContaResumoDTO> rendimento(@PathVariable Long numero) {
         return ResponseEntity
                 .ok(service.rendimento(numero));
     }

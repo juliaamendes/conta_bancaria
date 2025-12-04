@@ -1,5 +1,7 @@
 package com.senai.contaBancaria.Infrastructure.Config;
 
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.*;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
@@ -12,7 +14,7 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI oficinaOpenAPI() {
         return new OpenAPI()
-                .info(new MidiDevice.Info()
+                .info(new Info()
                         .title("API - Conta Bancária")
                         .description("Cadastro e gestão de serviços de um banco.")
                         .version("1.0")

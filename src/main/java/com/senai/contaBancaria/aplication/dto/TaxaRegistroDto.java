@@ -1,10 +1,12 @@
 package com.senai.contaBancaria.aplication.dto;
 
-import com.senai.novo_conta_bancaria.domain.entity.Taxa;
+import com.senai.contaBancaria.domain.entity.Taxa;
+import com.senai.contaBancaria.domain.enums.FormaPagamento;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 
 @Builder
 public record TaxaRegistroDto(
@@ -19,7 +21,12 @@ public record TaxaRegistroDto(
 
         @NotNull(message = "O valor fixo não pode ser nulo.")
         @PositiveOrZero(message = "O valor fixo não pode ser negativo.")
-        BigDecimal valorFixo
+        BigDecimal valorFixo,
+
+        @NotNull(message = "A forma de pagamento taxada não pode ser nula.")
+        @NotBlank(message = "A forma de pagamento taxada não pode ser vazia.")
+        @Size(min = 3, max = 100, message = "A forma de pagamento taxada deve ter entre 3 e 100 caracteres.")
+        String formaPagamento
 ) {
     public Taxa toEntity() {
         return Taxa.builder()
@@ -27,6 +34,9 @@ public record TaxaRegistroDto(
                 .descricao(descricao)
                 .percentual(percentual)
                 .valorFixo(valorFixo)
+                .pagamentos(new HashSet<>())
+                .formaPagamento(FormaPagamento.valueOf(formaPagamento))
+                .ativo(true)
                 .build();
     }
 }
