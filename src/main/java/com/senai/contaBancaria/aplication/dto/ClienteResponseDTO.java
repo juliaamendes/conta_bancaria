@@ -11,8 +11,7 @@ public record ClienteResponseDTO(
         String id,
         @NotBlank
         String nome,
-        @NotNull
-        String cpf,
+        Long cpf,
         List<ContaResumoDTO> contas
 ) {
     public static ClienteResponseDTO fromEntity(Cliente cliente) {

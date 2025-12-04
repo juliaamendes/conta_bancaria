@@ -36,7 +36,7 @@ public class AdminBootstrap implements CommandLineRunner {
                     Gerente admin = Gerente.builder()
                             .nome("Administrador Provisório")
                             .email(adminEmail)
-                            .cpf("000.000.000-00")
+                            .cpf(00000000000L)
                             .senha(passwordEncoder.encode(adminSenha))
                             .role(Role.ADMIN)
                             .build();

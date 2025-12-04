@@ -25,7 +25,7 @@ public class ClienteService {
     @PreAuthorize("hasAnyRole('ADMIN', 'GERENTE')")
     public ClienteResponseDTO registrarClienteOuAnexarConta(ClienteRegistroDTO dto){
 
-        var cliente = repository.findByCpfAndAtivoTrue(dto.cpf()).orElseGet(
+        var cliente = repository.findByCpfAndAtivoTrue(String.valueOf(dto.cpf())).orElseGet(
                 () -> repository.save(dto.toEntity())
         );
 
