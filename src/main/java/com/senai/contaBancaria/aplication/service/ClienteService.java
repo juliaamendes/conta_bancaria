@@ -33,7 +33,7 @@ public class ClienteService {
         var novaConta = dto.contaDTO().toEntity(cliente);
 
         boolean jaTemTipo = contas.stream()
-                .anyMatch(c -> c.getClass().equals(novaConta.getClass()) && c.isAtiva());
+                .anyMatch(conta -> conta.getClass().equals(novaConta.getClass()) && conta.isAtiva());
 
         if(jaTemTipo)
             throw new ContaMesmoTipoException();

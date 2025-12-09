@@ -70,4 +70,13 @@ public abstract class Conta {
         if (valor.compareTo(BigDecimal.ZERO) <= 0)
             throw new ValoresNegativosExecption(operacao);
     }
+
+    public boolean isAtiva() {
+        return this.ativo;
+    }
+
+    public void setAtiva(boolean b) {
+        this.ativo = b;
+    }
+
 }
