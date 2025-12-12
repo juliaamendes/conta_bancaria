@@ -10,7 +10,7 @@ import org.springframework.context.annotation.*;
 import javax.sound.midi.MidiDevice;
 
 @Configuration
-public class SwaggerConfig {
+public class SwaggerConfig {//corrige com carinho Rafa//
     @Bean
     public OpenAPI oficinaOpenAPI() {
         return new OpenAPI()
